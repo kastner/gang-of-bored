@@ -41,3 +41,11 @@ ErrorDocument 403 /403.php
 
 # Get mod_rewrite fired up
 RewriteEngine on
+
+# Rewrite rules
+
+# Stop internal redirects
+RewriteCond %{ENV:REDIRECT_STATUS} 200
+RewriteRule .* - [L]
+
+RewriteRule ^clusters\.?(.*)$ clusters.php?format=$1 [L]

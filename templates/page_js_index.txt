@@ -4,4 +4,66 @@
 
 <p>Ok. Looks like you got flamework installed.</p>
 
+<ul id="sidebar">
+</ul>
+
+<div id="main-content">
+</div>
+
+{literal}
+<script>
+	var Cluster = Backbone.Model.extend({
+	});
+
+	var ButtonView = Backbone.View.extend({
+		tagName: "li",
+
+		className: "button",
+
+		events: {
+			"click": "activate"
+		},
+
+		render: function() {
+			$(this.el).html(this.model.get("name"));
+			this.handleEvents();
+			return this;
+		},
+
+		activate: function() {
+			alert("activated");
+			this.model.set({active: true});
+		},
+
+		initialize: function() {
+			_.bindAll(this, "render");
+		}
+	});
+
+
+	//
+	// Request and load it all up
+	//
+
+	$(function() {
+		$.getJSON("/clusters.json", function(clusters) {
+			// var clusters = [ { name: "playground", owner: "erik"} ];
+
+			_.each(clusters, function(cluster) {
+				var clu = new Cluster(cluster);
+				var btn = new ButtonView({model: clu, id: "cluster-button-" + clu.cid});
+				clu.bind("change", btn.render);
+				$("#sidebar").append(btn.render().el);
+			});
+		});
+	});
+
+	//var cluster1 = new Cluster({name: "untitled"});
+	//cluster1.bind("change", function() { btn.render(); });
+
+	//var btn = new ButtonView({model: cluster1, id: "cluster-" + cluster1.cid});
+	//$("#sidebar").append(btn.el);
+	//cluster1.set({name:"bob"});
+</script>
+{/literal}
 {include file='inc_foot.txt'}
