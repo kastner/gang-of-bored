@@ -29,5 +29,5 @@
 	# output
 	#
 
-	$smarty->display('page_index.txt');
+	$smarty->display('page_js_index.txt');
 ?>
